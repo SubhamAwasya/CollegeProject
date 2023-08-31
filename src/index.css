@@ -1,0 +1,62 @@
+body {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #242424;
+  color: white;
+}
+#root {
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
+form {
+  display: flex;
+  background-color: #353535;
+  flex-direction: column;
+  padding: 2rem 2rem;
+  border-radius: 1rem;
+  align-items: center;
+}
+h1 {
+  margin: 0 0 1rem 0;
+}
+.finput {
+  font-family: "Poppins", sans-serif;
+  font-size: medium;
+  border: none;
+  color: white;
+  background-color: #202020;
+  border-radius: 10px;
+  padding: 0.8rem;
+  width: 15rem;
+  margin: 0.8rem;
+}
+.sbtn {
+  font-size: medium;
+  font-family: "Poppins", sans-serif;
+  margin-top: 1rem;
+  width: 5rem;
+  border: none;
+  color: white;
+  background-color: #202020;
+  border-radius: 10px;
+  padding: 0.8rem;
+  width: 10rem;
+  margin: 1rem;
+}
+::-ms-reveal {
+  color: white;
+  background-color: rgb(135, 116, 116);
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: #ffffff;
+  transition: background-color 5000s ease-in-out 0s;
+  box-shadow: inset 0 0 20px 20px #242424;
+}
