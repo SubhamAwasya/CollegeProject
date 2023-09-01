@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import "./css/form.css";
 function Form() {
   const [isRegisterd, setIsRefisterd] = useState(false);
 
