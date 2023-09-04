@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useSyncExternalStore } from "react";
 import axios from "axios";
 import "./css/form.css";
 
@@ -9,6 +9,7 @@ function Form() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [cPassword, setcPassword] = useState("");
+  const [validationError, setValidationError] = useState("");
 
   //User data that is send to the server///////////////////////////////////////////////
   const logInData = {
@@ -20,31 +21,49 @@ function Form() {
     lname: lName,
     email: email,
     password: password,
-    confirmP: cPassword,
   };
-  //////////////////////////////////////////////////////////////////////////////
+  //Log in ////////////////////////////////////////////////////////////////////////////
 
-  async function LogIn(e) {
+  function LogIn(e) {
     e.preventDefault();
-    await axios.post("http://localhost:3000/", logInData).then((res) => {
-      console.log(res.status);
-    });
+    axios
+      .post("http://localhost:3000/login", logInData)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    alert("Successfully Loged in");
   }
-  //////////////////////////////////////////////////////////////////////////////
+  //Sign in ////////////////////////////////////////////////////////////////////////////
 
   function SignUp(e) {
     e.preventDefault();
-    axios.post("http://localhost:3000/", signUpData).then((res) => {
-      console.log(res.data);
-    });
+    if (password != cPassword) {
+      setValidationError("Password does not match");
+    } else {
+      setValidationError("");
+      axios
+        .post("http://localhost:3000/signup", signUpData)
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      alert("Successfully registerd");
+    }
   }
+  //HTML ///////////////////////////////////////////////////////////////////////////////
 
   return (
     <>
-      <form>
+      <form onSubmit={isRegisterd ? SignUp : LogIn}>
         <h2>
           {isRegisterd ? "Enter detail to register" : "Enter detail to login"}
         </h2>
+
         {isRegisterd && (
           <input
             value={fName}
@@ -82,6 +101,9 @@ function Form() {
           className="finput"
           name="password"
           placeholder="Password"
+          id="password"
+          minlength="8"
+          maxlength="12"
           type="password"
           required
         ></input>
@@ -91,18 +113,19 @@ function Form() {
             onChange={(e) => setcPassword(e.target.value)}
             className="finput"
             name="confirmpassword"
+            minlength="8"
+            maxlength="12"
             placeholder="Confirm Password"
+            id="confirm_password"
             type="password"
             required
           ></input>
         )}
-        <button
-          className="sbtn"
-          type="submit"
-          onClick={isRegisterd ? SignUp : LogIn}
-        >
+
+        <button className="sbtn" type="submit">
           {isRegisterd ? "SignUp" : "LogIn"}
         </button>
+        <h4>{validationError}</h4>
         <a
           onClick={() => {
             {

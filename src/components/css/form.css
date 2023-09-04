@@ -8,8 +8,14 @@ form {
   margin: 2rem auto 0 auto;
   width: fit-content;
 }
-h1 {
+form h2 {
   margin: 0 0 1rem 0;
+}
+form h4 {
+  font-weight: 400;
+  letter-spacing: 2px;
+  color: rgb(255, 53, 53);
+  margin: 0 0 10px 0;
 }
 form a {
   cursor: pointer;
@@ -20,6 +26,7 @@ form a:hover {
 .finput {
   font-family: "Poppins", sans-serif;
   font-size: medium;
+  height: 15px;
   border: none;
   color: white;
   background-color: #202020;
