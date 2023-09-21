@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useSyncExternalStore } from "react";
 import axios from "axios";
-import "./css/form.css";
+import "./form.css";
 
-function Form() {
-  const [isRegisterd, setIsRefisterd] = useState(false);
+const url = "http://localhost:3000/users";
+
+function Form(prop) {
+  const [isRegisterd, setIsRefisterd] = useState(true);
   const [fName, setfName] = useState("");
   const [lName, setlName] = useState("");
   const [email, setEmail] = useState("");
@@ -23,48 +25,67 @@ function Form() {
     password: password,
   };
   //Log in ////////////////////////////////////////////////////////////////////////////
-
   function LogIn(e) {
     e.preventDefault();
     axios
-      .post("http://localhost:3000/login", logInData)
+      .get(url + `?email=${email}`)
+      .then((res) => res.data)
       .then((res) => {
-        console.log(res.data);
+        if (res[0].email === email) {
+          if (res[0].password == password) {
+            prop.LogedIn(true);
+            prop.userData(res);
+            setValidationError("");
+          } else {
+            setValidationError("Password is incorrect");
+          }
+        }
       })
       .catch((error) => {
-        console.log(error);
+        setValidationError("You are not registered");
       });
-    alert("Successfully Loged in");
   }
   //Sign in ////////////////////////////////////////////////////////////////////////////
-
   function SignUp(e) {
     e.preventDefault();
     if (password != cPassword) {
       setValidationError("Password does not match");
     } else {
       setValidationError("");
+      //checking is uesr registerd in
       axios
-        .post("http://localhost:3000/signup", signUpData)
+        .get(url + `?email=${email}`)
+        .then((res) => res.data)
         .then((res) => {
-          console.log(res.data);
+          if (res[0].email === email) {
+            console.log(res[0].email);
+            setValidationError("You already registered With this gmail");
+          }
         })
         .catch((error) => {
+          // if not registerd then registed to new user
           console.log(error);
+          axios
+            .post(url, signUpData)
+            .then((res) => {
+              setIsRefisterd(true);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
         });
-      alert("Successfully registerd");
     }
   }
-  //HTML ///////////////////////////////////////////////////////////////////////////////
 
+  //HTML ///////////////////////////////////////////////////////////////////////////////
   return (
     <>
-      <form onSubmit={isRegisterd ? SignUp : LogIn}>
+      <form autoComplete="on" onSubmit={!isRegisterd ? SignUp : LogIn}>
         <h2>
-          {isRegisterd ? "Enter detail to register" : "Enter detail to login"}
+          {!isRegisterd ? "Enter detail to register" : "Enter detail to login"}
         </h2>
 
-        {isRegisterd && (
+        {!isRegisterd && (
           <input
             value={fName}
             onChange={(e) => setfName(e.target.value)}
@@ -75,7 +96,7 @@ function Form() {
             required
           ></input>
         )}
-        {isRegisterd && (
+        {!isRegisterd && (
           <input
             value={lName}
             onChange={(e) => setlName(e.target.value)}
@@ -102,19 +123,19 @@ function Form() {
           name="password"
           placeholder="Password"
           id="password"
-          minlength="8"
-          maxlength="12"
+          minLength="8"
+          maxLength="12"
           type="password"
           required
         ></input>
-        {isRegisterd && (
+        {!isRegisterd && (
           <input
             value={cPassword}
             onChange={(e) => setcPassword(e.target.value)}
             className="finput"
             name="confirmpassword"
-            minlength="8"
-            maxlength="12"
+            minLength="8"
+            maxLength="12"
             placeholder="Confirm Password"
             id="confirm_password"
             type="password"
@@ -123,17 +144,18 @@ function Form() {
         )}
 
         <button className="sbtn" type="submit">
-          {isRegisterd ? "SignUp" : "LogIn"}
+          {!isRegisterd ? "SignUp" : "LogIn"}
         </button>
-        <h4>{validationError}</h4>
+        <h4 className="validationError">{validationError}</h4>
         <a
           onClick={() => {
             {
               setIsRefisterd(!isRegisterd);
+              setValidationError("");
             }
           }}
         >
-          {isRegisterd ? "Alredy a user log in" : "Register a new user"}
+          {!isRegisterd ? "Alredy a user log in" : "Register a new user"}
         </a>
       </form>
     </>

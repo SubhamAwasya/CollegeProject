@@ -1,15 +1,23 @@
 import React from "react";
-import "./css/navbar.css";
+import "./navbar.css";
 
-function NavBar() {
+function NavBar(prop) {
   return (
     <div className="navContainer">
-      <h2>NavBar</h2>
+      <h2>{prop.data[0].fname}</h2>
       <div className="menuLink">
         <a>HOME</a>
         <a>DATA</a>
         <a>TEXT</a>
         <a>DOCUMENTATION</a>
+        <button
+          className="btns"
+          onClick={() => {
+            prop.LogedIn(false);
+          }}
+        >
+          Log Out
+        </button>
       </div>
     </div>
   );

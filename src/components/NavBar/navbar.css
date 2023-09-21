@@ -7,8 +7,25 @@
   justify-content: space-between;
   align-items: center;
 }
+.btns {
+  font-size: medium;
+  font-family: "Poppins", sans-serif;
+  color: white;
+  border-style: none;
+  border: 1px solid white;
+  border-radius: 2rem;
+  background-color: #202020;
+  width: 6rem;
+  height: 2rem;
+  cursor: pointer;
+}
+.btns:hover {
+  background-color: white;
+  color: #202020;
+}
 .menuLink {
   display: flex;
+  align-items: center;
   margin-right: 3rem;
 }
 .menuLink a {

@@ -5,7 +5,7 @@ form {
   padding: 2rem 2rem;
   border-radius: 1rem;
   align-items: center;
-  margin: 2rem auto 0 auto;
+  margin: 5rem auto 0 auto;
   width: fit-content;
 }
 form h2 {
@@ -23,6 +23,12 @@ form a {
 form a:hover {
   text-decoration: underline;
 }
+
+.validationError {
+  text-align: center;
+  width: 250px;
+}
+
 .finput {
   font-family: "Poppins", sans-serif;
   font-size: medium;
@@ -39,7 +45,7 @@ form a:hover {
   font-size: medium;
   font-family: "Poppins", sans-serif;
   margin-top: 1rem;
-  width: 5rem;
+  margin: 1rem;
   border: none;
   color: white;
   background-color: #202020;
@@ -47,7 +53,6 @@ form a:hover {
   padding: 0.8rem;
   width: 10rem;
   cursor: pointer;
-  margin: 1rem;
 }
 ::-ms-reveal {
   color: white;
